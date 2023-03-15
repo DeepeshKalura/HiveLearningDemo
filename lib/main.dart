@@ -174,7 +174,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.green),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ViewScreen(),
+                        ),
+                      );
+                    },
                     child: const Text("View >"),
                   ),
                 ),
@@ -199,29 +206,16 @@ class ViewScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('View Screen'),
       ),
-      body: Column(
-        children: [
-          Row(
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green),
-                  ),
-                  onPressed: () {},
-                  child: const Text("View >"),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-            ],
+      body: Column(children: [
+        Expanded(
+          child: FutureBuilder(
+            future: Hive.openBox('student'),
+            builder: (context, snapshot) {
+              return const Text('Hello World');
+            },
           ),
-        ],
-      ),
+        ),
+      ]),
     );
   }
 }
