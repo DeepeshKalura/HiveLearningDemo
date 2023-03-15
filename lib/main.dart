@@ -63,7 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
       var student = await Hive.openBox<Map<String, String>>('student');
 
       response = student.get(studentId).toString();
-      print(response);
     } catch (e) {
       response = e.toString();
     }
