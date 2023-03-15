@@ -37,6 +37,12 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    Hive.close();
+  }
+
   Future<String> storingBox(int studentId, Map<String, String> about) async {
     String response = 'UnSuccessful';
     try {
@@ -57,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
       var student = await Hive.openBox<Map<String, String>>('student');
 
       response = student.get(studentId).toString();
+      print(response);
     } catch (e) {
       response = e.toString();
     }
@@ -211,7 +218,13 @@ class ViewScreen extends StatelessWidget {
           child: FutureBuilder(
             future: Hive.openBox('student'),
             builder: (context, snapshot) {
-              return const Text('Hello World');
+              return Card(
+                child: Column(
+                  children: [
+                    Text(snapshot.data?.get(1)['name'].toString() ?? 'No Data'),
+                  ],
+                ),
+              );
             },
           ),
         ),
